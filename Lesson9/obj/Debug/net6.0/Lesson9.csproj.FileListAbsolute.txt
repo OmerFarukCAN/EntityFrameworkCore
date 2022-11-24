@@ -69,3 +69,4 @@ C:\Users\omerf\Desktop\EntityFramework\EfCoreTraining\Lesson9\obj\Debug\net6.0\r
 C:\Users\omerf\Desktop\EntityFramework\EfCoreTraining\Lesson9\obj\Debug\net6.0\Lesson9.pdb
 C:\Users\omerf\Desktop\EntityFramework\EfCoreTraining\Lesson9\obj\Debug\net6.0\Lesson9.genruntimeconfig.cache
 C:\Users\omerf\Desktop\EntityFramework\EfCoreTraining\Lesson9\obj\Debug\net6.0\ref\Lesson9.dll
+C:\Users\omerf\Desktop\EntityFramework\EfCoreTraining\Lesson9\bin\Debug\net6.0\ConsoleTables.dll

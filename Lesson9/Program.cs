@@ -196,7 +196,15 @@ namespace Lesson9
             optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Database=ECommerceDemo2;User Id=ofarukcan;Password=prostreet273;TrustServerCertificate=True");
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ProductItem>().HasKey(up => new { up.ProductId, up.ItemId });
+        }
+
         public DbSet<Product> Products { get; set; }
+        public DbSet<Item> Items { get; set; }
+
+        public DbSet<ProductItem> ProductItem { get; set; }
     }
 
     // --> Entity
@@ -211,5 +219,21 @@ namespace Lesson9
         public string ProductName { get; set; }
         public float Price { get; set; }
         public int Stock { get; set; }
+
+        public ICollection<Item> Items { get; set; }
+    }
+
+    public class Item
+    {
+        public int Id { get; set; }
+        public string ItemName { get; set; }
+    }
+
+    public class ProductItem
+    {
+        public int ProductId { get; set; }
+        public int ItemId { get; set; }
+        public Product Product { get; set; }
+        public Item Item { get; set; }
     }
 }
