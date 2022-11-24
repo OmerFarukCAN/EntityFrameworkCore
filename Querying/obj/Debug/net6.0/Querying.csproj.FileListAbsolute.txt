@@ -66,4 +66,3 @@ C:\Users\omerf\Desktop\EntityFramework\EfCoreTraining\Querying\obj\Debug\net6.0\
 C:\Users\omerf\Desktop\EntityFramework\EfCoreTraining\Querying\obj\Debug\net6.0\Querying.pdb
 C:\Users\omerf\Desktop\EntityFramework\EfCoreTraining\Querying\obj\Debug\net6.0\Querying.genruntimeconfig.cache
 C:\Users\omerf\Desktop\EntityFramework\EfCoreTraining\Querying\obj\Debug\net6.0\ref\Querying.dll
-C:\Users\omerf\Desktop\EntityFramework\EfCoreTraining\Querying\bin\Debug\net6.0\ConsoleTables.dll

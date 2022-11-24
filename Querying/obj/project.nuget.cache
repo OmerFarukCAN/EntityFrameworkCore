@@ -1,12 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "DIUKshQf5i7FNZzQwMSuWrzVAj6k7hCoNlv3ccKkV/WjYemNQPeW2goWVbCyUZ6G+0r9R0iDZCgqCBxmG4hKTA==",
+  "dgSpecHash": "1+JO07lNkPMakKXMJaDwzqxa123LrMS4rRfp340UNpggc7xRcnvrNmApEDZtV8L/225pstce1RB5TWi2pxaPAg==",
   "success": true,
   "projectFilePath": "C:\\Users\\omerf\\Desktop\\EntityFramework\\EfCoreTraining\\Querying\\Querying.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\omerf\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\omerf\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
-    "C:\\Users\\omerf\\.nuget\\packages\\consoletables\\2.4.2\\consoletables.2.4.2.nupkg.sha512",
     "C:\\Users\\omerf\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\omerf\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\omerf\\.nuget\\packages\\microsoft.data.sqlclient\\5.0.1\\microsoft.data.sqlclient.5.0.1.nupkg.sha512",
@@ -51,7 +50,6 @@
     "C:\\Users\\omerf\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
     "C:\\Users\\omerf\\.nuget\\packages\\system.reflection\\4.3.0\\system.reflection.4.3.0.nupkg.sha512",
     "C:\\Users\\omerf\\.nuget\\packages\\system.reflection.primitives\\4.3.0\\system.reflection.primitives.4.3.0.nupkg.sha512",
-    "C:\\Users\\omerf\\.nuget\\packages\\system.reflection.typeextensions\\4.3.0\\system.reflection.typeextensions.4.3.0.nupkg.sha512",
     "C:\\Users\\omerf\\.nuget\\packages\\system.resources.resourcemanager\\4.3.0\\system.resources.resourcemanager.4.3.0.nupkg.sha512",
     "C:\\Users\\omerf\\.nuget\\packages\\system.runtime\\4.3.0\\system.runtime.4.3.0.nupkg.sha512",
     "C:\\Users\\omerf\\.nuget\\packages\\system.runtime.caching\\5.0.0\\system.runtime.caching.5.0.0.nupkg.sha512",

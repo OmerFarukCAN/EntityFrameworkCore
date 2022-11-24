@@ -1,5 +1,6 @@
 ﻿using Lesson9;
 using Microsoft.EntityFrameworkCore;
+using System.Text.RegularExpressions;
 
 namespace Querying
 {
@@ -250,10 +251,10 @@ namespace Querying
             #region Distinc
             // --> Sorguda mukerrer kayitlarin varsa bunlari tekillestiren bir isleve sahip fonksiyondur
 
-            //var products = await context.Products.Distinct().ToListAsync();
+            //var products = await context.Products.Select(p => p.ProductName).Distinct().ToListAsync();
             //foreach (var product in products)
             //{
-            //    Console.WriteLine(product.ProductName);
+            //    Console.WriteLine(product);
             //}
             #endregion
 
@@ -295,7 +296,110 @@ namespace Querying
             #endregion
 
             #region Sorgu Sonucu Donusum Fonksiyonlari
+            // --> Bu fonksiyonlar ile sorgu neticesinde elde edilen verileri istegimiz dogrultusunda farkli turlerde projeksiyon edebiliyoruz.
 
+            #region ToDictionaryAsync
+            // Sorgu neticesinde gelecek olan veriyi bir dictionary olarak elde etmek/tutmak/karsilamak istiyorsak eger kullanilir! ToList ile ayni amaca hizmet etmektedir. Yani olusturulan sorguyu execute edip neticesini alirlar. ToList: Gelen sorgu neticesini entity turunde bir koleysiyona (List<TEntity>) donusturmekteyken. ToDictionary : Gelen sorgu neticesini Dictionary turunden bir koleksiyona donusturecektir.
+
+            //var products = await context.Products.ToDictionaryAsync(p => p.ProductName, p => p.Price);
+            #endregion
+
+            #region ToArrayAsync
+            // --> Olusturulan sorguyu dizi olarak elde eder. ToList ile muadil amaca hizmet eder. Yani sorguyu execute eder lakin gelen sonucu entity dizisi olarak elde ed
+
+            //var products = await context.Products.ToArrayAsync();
+            #endregion
+
+            #region Select
+            // --> Select fonksiyonunun islevsel olarak birden fazla davranisi soz konusudur.
+
+            // --> 1 - Select fonksiyonu, generate edilecek sorgunun cekilecek kolonlarini ayarlamamizi saglamaktadir
+            //var products = await context.Products.Select(p => new Product
+            //{
+            //    Id = p.Id,
+            //    Price = p.Price,
+            //}).ToListAsync();
+
+            //foreach (var product in products)
+            //{
+            //    Console.WriteLine(product.Id + " - " + product.Price); // Bu degerler haricinde diger degerler alinmayacagindan sorguya null dondurur.
+            //}
+
+            // --> 2 - Select fonksiyonu gelen verileri farkli turlerde karsilamamizi saglar. T, anonim
+
+            // --> Anonim
+            //var products = await context.Products.Select(p => new
+            //{
+            //    Id = p.Id,
+            //    Price = p.Price,
+            //}).ToListAsync();
+
+            // --> Istedigimiz herhangi bir tur(T)
+            //var products = await context.Products.Select(p => new ProductDetail
+            //{
+            //    Id = p.Id,
+            //    Price = p.Price,
+            //}).ToListAsync();
+            #endregion
+
+            #region SelectMany
+            // --> Select ile ayni hizmete amac eder lakin iliskisel tablolar neticesinde gelen koleksiyonel verileri de tekillestirip projecksiyon etmemizi saglar.
+
+            //var products = await context.Products.Include(i => i.Items).SelectMany(p => p.Items, (p,i) => new
+            //{
+            //    p.Id,
+            //    p.Price,
+            //    i.ItemName
+            //}).ToListAsync();
+            #endregion
+            #endregion
+
+            #region GroupBy Fonksiyonu
+
+            #region Method Syntax
+            //var datas = await context.Products.GroupBy(p => p.Price).Select(group => new
+            //{
+            //    Count = group.Count(),
+            //    Price = group.Key
+            //}).ToListAsync();
+            #endregion
+
+            #region Query Syntaz
+            //var datas = await (from product in context.Products
+            //                   group product by product.Price
+            //                   into g
+            //                   select new
+            //                   {
+            //                       Price = g.Key,
+            //                       Count = g.Count()
+            //                   }).ToListAsync();
+
+            //foreach (var product in datas)
+            //{
+            //    Console.WriteLine(product.Price + " " + product.Count);
+            //}
+
+            // --> Yukaridaki kodun SQL sorgusu bu sekildedir.
+            //SELECT Price, COUNT(*) FROM Products
+            //GROUP BY Price
+
+            #endregion
+
+            #endregion
+
+            #region Foreach Fonksiyonu
+            // --> Bir sorgulama fonksiyonu degildir! Sorgulama neticesinde elde edilen koleksiyonel veriler uzerinde iterasyonel olarak donmemizi ve teker teker verileri elde edip islemler yapabilmemizi saglayan bir fonksiyondur. Foreach dongusunun metot halidir.
+
+            //var datas = await (from product in context.Products
+            //                   group product by product.Price
+            //                   into g
+            //                   select new
+            //                   {
+            //                       Price = g.Key,
+            //                       Count = g.Count()
+            //                   }).ToListAsync();
+
+            //datas.ForEach(data => Console.WriteLine(data.Price + " " + data.Count));
             #endregion
         }
     }
