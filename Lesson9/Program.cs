@@ -236,4 +236,10 @@ namespace Lesson9
         public Product Product { get; set; }
         public Item Item { get; set; }
     }
+
+    public class ProductDetail
+    {
+        public int Id { get; set; }
+        public float Price { get; set; }
+    }
 }
