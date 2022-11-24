@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseFirst", "DatabaseFi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lesson9", "Lesson9\Lesson9.csproj", "{2E7ED18E-0BF3-4FC6-8BF1-ED0257BD4A99}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Querying", "Querying\Querying.csproj", "{B9894913-B9E1-47A0-9D4E-AFAB3E44E002}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Querying", "Querying\Querying.csproj", "{B9894913-B9E1-47A0-9D4E-AFAB3E44E002}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChangeTracker", "ChangeTracker\ChangeTracker.csproj", "{18A2FF6E-9A14-423C-886B-E09CB59FF3F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{B9894913-B9E1-47A0-9D4E-AFAB3E44E002}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9894913-B9E1-47A0-9D4E-AFAB3E44E002}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B9894913-B9E1-47A0-9D4E-AFAB3E44E002}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18A2FF6E-9A14-423C-886B-E09CB59FF3F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18A2FF6E-9A14-423C-886B-E09CB59FF3F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18A2FF6E-9A14-423C-886B-E09CB59FF3F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18A2FF6E-9A14-423C-886B-E09CB59FF3F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
