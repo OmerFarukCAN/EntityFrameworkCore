@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Lesson9
 {
@@ -194,17 +196,35 @@ namespace Lesson9
         {
             // --> Provider, Connection String, Lazy Loading vb.
             optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Database=ECommerceDemo2;User Id=ofarukcan;Password=prostreet273;TrustServerCertificate=True");
+            //optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking); // Bu sekilde takip edilme kesilebilir. Default parametre TrackAll ' dur.
         }
 
+        // --> Modellerin(entity) veritabaninda generate edilecek yapilari bu fonksiyon icerisinde konfigure edilir. (Fluent API)
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ProductItem>().HasKey(up => new { up.ProductId, up.ItemId });
+
+            modelBuilder.Entity<CalisanAdres>()
+                .HasKey(c => c.Id);
+
+            modelBuilder.Entity<Calisan>()
+                .HasOne(c => c.CalisanAdresleri)
+                .WithOne(c => c.Calisan)
+                .HasForeignKey<CalisanAdres>(c => c.Id);
         }
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Item> Items { get; set; }
-
         public DbSet<ProductItem> ProductItem { get; set; }
+
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<Book> Books { get; set; }
+        public DbSet<Author> Authors { get; set; }
+
+        //public DbSet<Departman> Departmanlar { get; set; }
+        public DbSet<Calisan> Calisanlar { get; set; }
+        public DbSet<CalisanAdres> CalisanAdresler { get; set; }
     }
 
     // --> Entity
@@ -222,13 +242,11 @@ namespace Lesson9
 
         public ICollection<Item> Items { get; set; }
     }
-
     public class Item
     {
         public int Id { get; set; }
         public string ItemName { get; set; }
     }
-
     public class ProductItem
     {
         public int ProductId { get; set; }
@@ -236,10 +254,100 @@ namespace Lesson9
         public Product Product { get; set; }
         public Item Item { get; set; }
     }
-
     public class ProductDetail
     {
         public int Id { get; set; }
         public float Price { get; set; }
     }
+
+    public class User
+    {
+        public User() => Console.WriteLine("The user object has been created.");
+        public int Id { get; set; }
+        public string UserName { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public ICollection<Role> Roles { get; set; }
+    }
+    public class Role
+    {
+        public Role() => Console.WriteLine("The role object has been created.");
+        public int Id { get; set; }
+        public string RoleName { get; set; }
+        public ICollection<User> Users { get; set; }
+    }
+    public class Book
+    {
+        public Book() => Console.WriteLine("The book object has been created.");
+        public int Id { get; set; }
+        public string BookName { get; set; }
+        public int NumberOfPages { get; set; }
+
+        public ICollection<Author> Authors { get; set; }
+    }
+    public class Author
+    {
+        public Author() => Console.WriteLine("Author object created.");
+        public int Id { get; set; }
+        public string AuthorName { get; set; }
+
+        public ICollection<Book> Books { get; set; }
+    }
+
+    #region Default Convention
+    //public class Calisan
+    //{
+    //    public int Id { get; set; }
+    //    public string CalisanAdi { get; set; }
+    //    public CalisanAdres CalisanAdresleri { get; set; } // Navigation Property
+    //}
+
+    //public class CalisanAdres
+    //{
+    //    public int Id { get; set; }
+    //    public int CalisanId { get; set; } // FK, Dependent, Default Convention
+    //    public int Adres { get; set; }
+    //    public Calisan Calisan { get; set; }
+    //}
+    #endregion
+
+    #region Data Annotations
+    //public class Calisan
+    //{
+    //    public int Id { get; set; }
+    //    public string CalisanAdi { get; set; }
+    //    public CalisanAdres CalisanAdresleri { get; set; } // Navigation Property
+    //}
+
+    //public class CalisanAdres
+    //{
+    //    [Key, ForeignKey(nameof(Calisan))] // Id property'si hem Primary Key, Hem de Foreign Key yapmis olduk. Dependent bir iliski kurmus olduk.
+    //    public int Id { get; set; }
+    //    public int Adres { get; set; }
+    //    public Calisan Calisan { get; set; }
+    //}
+    #endregion
+
+    #region Fluent API
+    public class Calisan
+    {
+        public int Id { get; set; }
+        public string CalisanAdi { get; set; }
+        public CalisanAdres CalisanAdresleri { get; set; } // Navigation Property
+    }
+
+    public class CalisanAdres
+    {
+        public int Id { get; set; }
+        public int Adres { get; set; }
+        public Calisan Calisan { get; set; }
+    }
+    #endregion
+
+    //public class Departman
+    //{
+    //    public int Id { get; set; }
+    //    public string DepartmanAdi { get; set; }
+    //    public ICollection<Calisan> Calisanlar { get; set; } // Bir departmanin birden cok (ICollection) calisani olabilir. (Navigation Property)
+    //}
 }
