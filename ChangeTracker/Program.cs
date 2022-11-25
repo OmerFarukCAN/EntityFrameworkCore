@@ -173,7 +173,7 @@ namespace ChangeTracker
             #endregion
 
             #region Change Tracker'in Interceptor Olarak Kullanilmasi
-
+            // --> Look EfCore-22.png, EfCore-23.png
             #endregion
         }
     }
