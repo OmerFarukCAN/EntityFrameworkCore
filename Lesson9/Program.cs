@@ -196,21 +196,50 @@ namespace Lesson9
         {
             // --> Provider, Connection String, Lazy Loading vb.
             optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Database=ECommerceDemo2;User Id=ofarukcan;Password=prostreet273;TrustServerCertificate=True");
-            //optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking); // Bu sekilde takip edilme kesilebilir. Default parametre TrackAll ' dur.
+            //optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking); // --> Bu sekilde takip edilme kesilebilir. Default parametre TrackAll ' dur.
         }
 
         // --> Modellerin(entity) veritabaninda generate edilecek yapilari bu fonksiyon icerisinde konfigure edilir. (Fluent API)
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Composite Primary Key
             modelBuilder.Entity<ProductItem>().HasKey(up => new { up.ProductId, up.ItemId });
 
-            modelBuilder.Entity<CalisanAdres>()
-                .HasKey(c => c.Id);
+            #region Data Annotations (n-n)
+            // --> Data Annotations (n-n)
+            //modelBuilder.Entity<KitapYazar>().HasKey(ky => new { ky.KId, ky.YId });
+            #endregion
 
-            modelBuilder.Entity<Calisan>()
-                .HasOne(c => c.CalisanAdresleri)
-                .WithOne(c => c.Calisan)
-                .HasForeignKey<CalisanAdres>(c => c.Id);
+            #region Fluent API (1-1)
+            //modelBuilder.Entity<CalisanAdres>()
+            //    .HasKey(c => c.Id);
+
+            //modelBuilder.Entity<Calisan>()
+            //    .HasOne(c => c.CalisanAdresleri)
+            //    .WithOne(c => c.Calisan)
+            //    .HasForeignKey<CalisanAdres>(c => c.Id);
+            #endregion
+
+            #region Fluent API (1-n)
+            //modelBuilder.Entity<Calisan>()
+            //    .HasOne(c => c.Departman)
+            //    .WithMany(d => d.Calisanlar);
+            ////.HasForeignKey(c => c.DID) --> Istedigimiz kolonu FK yapmak icin
+            #endregion
+
+            #region Fluent API (n-n)
+            //modelBuilder.Entity<BookAuthor>().HasKey(ba => new { ba.BookId, ba.AuthorId });
+
+            //modelBuilder.Entity<BookAuthor>()
+            //    .HasOne(ba => ba.Book)
+            //    .WithMany(b => b.Authors)
+            //    .HasForeignKey(ba => ba.BookId);
+
+            //modelBuilder.Entity<BookAuthor>()
+            //    .HasOne(ba => ba.Author)
+            //    .WithMany(a => a.Books)
+            //    .HasForeignKey(ba => ba.AuthorId);
+            #endregion            
         }
 
         public DbSet<Product> Products { get; set; }
@@ -219,12 +248,13 @@ namespace Lesson9
 
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
-        public DbSet<Book> Books { get; set; }
-        public DbSet<Author> Authors { get; set; }
+
+        //public DbSet<Book> Books { get; set; }
+        //public DbSet<Author> Authors { get; set; }
 
         //public DbSet<Departman> Departmanlar { get; set; }
-        public DbSet<Calisan> Calisanlar { get; set; }
-        public DbSet<CalisanAdres> CalisanAdresler { get; set; }
+        //public DbSet<Calisan> Calisanlar { get; set; }
+        //public DbSet<CalisanAdres> CalisanAdresler { get; set; }        
     }
 
     // --> Entity
@@ -276,25 +306,10 @@ namespace Lesson9
         public string RoleName { get; set; }
         public ICollection<User> Users { get; set; }
     }
-    public class Book
-    {
-        public Book() => Console.WriteLine("The book object has been created.");
-        public int Id { get; set; }
-        public string BookName { get; set; }
-        public int NumberOfPages { get; set; }
 
-        public ICollection<Author> Authors { get; set; }
-    }
-    public class Author
-    {
-        public Author() => Console.WriteLine("Author object created.");
-        public int Id { get; set; }
-        public string AuthorName { get; set; }
+    #region One to One Relationship
 
-        public ICollection<Book> Books { get; set; }
-    }
-
-    #region Default Convention
+    #region Default Convention (1-1)
     //public class Calisan
     //{
     //    public int Id { get; set; }
@@ -311,7 +326,7 @@ namespace Lesson9
     //}
     #endregion
 
-    #region Data Annotations
+    #region Data Annotations (1-1)
     //public class Calisan
     //{
     //    public int Id { get; set; }
@@ -328,26 +343,151 @@ namespace Lesson9
     //}
     #endregion
 
-    #region Fluent API
-    public class Calisan
-    {
-        public int Id { get; set; }
-        public string CalisanAdi { get; set; }
-        public CalisanAdres CalisanAdresleri { get; set; } // Navigation Property
-    }
+    #region Fluent API (1-1)
+    //public class Calisan
+    //{
+    //    public int Id { get; set; }
+    //    public string CalisanAdi { get; set; }
+    //    public CalisanAdres CalisanAdresleri { get; set; } // Navigation Property
+    //}
 
-    public class CalisanAdres
-    {
-        public int Id { get; set; }
-        public int Adres { get; set; }
-        public Calisan Calisan { get; set; }
-    }
+    //public class CalisanAdres
+    //{
+    //    public int Id { get; set; }
+    //    public int Adres { get; set; }
+    //    public Calisan Calisan { get; set; }
+    //}
     #endregion
+
+    #endregion
+
+    #region One to Many Relationship
+
+    #region Default Convention (1-n)
+    //public class Calisan
+    //{
+    //    public int Id { get; set; }
+    //    //public int DepartmanId { get; set; } // --> FK, 1-n iliskilerinde istege baglidir.
+    //    public string CalisanAdi { get; set; }
+    //    public Departman Departman { get; set; }
+    //}
 
     //public class Departman
     //{
     //    public int Id { get; set; }
     //    public string DepartmanAdi { get; set; }
-    //    public ICollection<Calisan> Calisanlar { get; set; } // Bir departmanin birden cok (ICollection) calisani olabilir. (Navigation Property)
+    //    public ICollection<Calisan> Calisanlar { get; set; }
     //}
+    #endregion
+
+    #region Data Annotations (1-n)
+    //public class Calisan
+    //{
+    //    public int Id { get; set; }
+    //    // [ForeignKey(nameof(Departman))] // --> Istege bagli FK isimlendirmesi icin
+    //    public int DId { get; set; }
+    //    public string CalisanAdi { get; set; }
+    //    public Departman Departman { get; set; }
+    //}
+
+    //public class Departman
+    //{
+    //    public int Id { get; set; }
+    //    public string DepartmanAdi { get; set; }
+    //    public ICollection<Calisan> Calisanlar { get; set; }
+    //}
+    #endregion
+
+    #region Fluent API (1-n)
+    //public class Calisan
+    //{
+    //    public int Id { get; set; }
+    //    // public int DId { get; set; } // --> Istedigimiz kolonu FK yapmak icin
+    //    public string CalisanAdi { get; set; }
+    //    public Departman Departman { get; set; }
+    //}
+
+    //public class Departman
+    //{
+    //    public int Id { get; set; }
+    //    public string DepartmanAdi { get; set; }
+    //    public ICollection<Calisan> Calisanlar { get; set; }
+    //}
+    #endregion
+
+    #endregion
+
+    #region Many to Many Relationship
+
+    #region Default Convention (n-n)
+    //public class Book
+    //{
+    //    public int Id { get; set; }
+    //    public string BookName { get; set; }
+
+    //    public ICollection<Author> Authors { get; set; }
+    //}
+    //public class Author
+    //{
+    //    public int Id { get; set; }
+    //    public string AuthorName { get; set; }
+
+    //    public ICollection<Book> Books { get; set; }
+    //}
+    #endregion
+
+    #region Data Annotations (n-n)
+    //public class Book
+    //{
+    //    public int Id { get; set; }
+    //    public string BookName { get; set; }
+    //    public ICollection<BookAuthor> Authors { get; set; }
+    //}
+    //// --> Cross Table
+    //public class BookAuthor
+    //{
+    //    //[ForeignKey(nameof(Book))] // --> Tercihe gore FK isimlerini kendimiz gore ayarlama
+    //    //public int BId { get; set; }
+    //    //[ForeignKey(nameof(Author))] // --> Tercihe gore FK isimlerini kendimiz gore ayarlama
+    //    //public int AId { get; set; }
+    //    public int BookId { get; set; }
+    //    public int AuthorId { get; set; }
+    //    public Book Book { get; set; }
+    //    public Author Author { get; set; }
+    //}
+    //public class Author
+    //{
+    //    public int Id { get; set; }
+    //    public string AuthorName { get; set; }
+    //    public ICollection<BookAuthor> Books { get; set; }
+    //}
+    #endregion
+
+    #region Fluent API (n-n)
+    //public class Book
+    //{
+    //    public int Id { get; set; }
+    //    public string BookName { get; set; }
+    //    public ICollection<BookAuthor> Authors { get; set; }
+    //}
+    //// --> Cross Table
+    //public class BookAuthor
+    //{
+    //    //public int AId { get; set; }
+    //    public int BookId { get; set; }
+    //    public int AuthorId { get; set; }
+    //    public Book Book { get; set; }
+    //    public Author Author { get; set; }
+    //}
+    //public class Author
+    //{
+    //    public int Id { get; set; }
+    //    public string AuthorName { get; set; }
+    //    public ICollection<BookAuthor> Books { get; set; }
+    //}
+    #endregion
+
+    #endregion
+
+    
 }
